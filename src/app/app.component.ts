@@ -19,6 +19,8 @@ export class AppComponent {
     console.log(result2 === 3);
     console.log(result2 !== 34);
 
+    let result3 = calculator.divide(6, 0);
+    console.log(result3 === null);    
   }
 
 }
