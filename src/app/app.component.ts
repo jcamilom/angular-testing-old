@@ -9,18 +9,6 @@ import { Calculator } from './calculator';
 export class AppComponent {
   title = 'ng-test';
 
-  ngOnInit() {
-    let calculator = new Calculator();
-    let result = calculator.multiply(3, 3);
-    console.log(result === 9);
-    console.log(result !== 12);
-
-    let result2 = calculator.divide(6, 2);
-    console.log(result2 === 3);
-    console.log(result2 !== 34);
-
-    let result3 = calculator.divide(6, 0);
-    console.log(result3 === null);    
-  }
+  ngOnInit() { }
 
 }
