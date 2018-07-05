@@ -7,7 +7,7 @@ import { Calculator } from './calculator';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'ng-test';
+  title = 'ing-test';
 
   ngOnInit() { }
 
