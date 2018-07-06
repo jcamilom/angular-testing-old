@@ -39,7 +39,7 @@ describe('UsersService', () => {
       inject([UsersService, MockBackend], fakeAsync((usersService, mockBackend: MockBackend) => {
 
         // Arrange
-        let dataResponse, dataUrl, dataMethod;
+        let dataResponse, dataUrl, dataMethod, dataToken;
         const userMock = {
           'id': 1,
           'name': 'Leanne Graham',
@@ -67,6 +67,7 @@ describe('UsersService', () => {
         mockBackend.connections.subscribe(connection => {
           dataUrl = connection.request.url;
           dataMethod = connection.request.method;
+          dataToken = connection.request.headers.get('API-TOKEN');
           connection.mockRespond(new Response(mockResponse));
         });
 
@@ -83,6 +84,7 @@ describe('UsersService', () => {
         expect(dataResponse.address).toBeDefined();
         expect(dataUrl).toEqual('http://jsonplaceholder.typicode.com/users/1');
         expect(dataMethod).toBe(RequestMethod.Get);
+        expect(dataToken === null).toBeFalsy();
 
       }))
     );
