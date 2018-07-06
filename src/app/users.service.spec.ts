@@ -192,4 +192,90 @@ describe('UsersService', () => {
 
   });
 
+  describe('test for updateUser', () => {
+
+    it('should return an updated user',
+      inject([UsersService, MockBackend], fakeAsync((usersService, mockBackend) => {
+
+        // Arrange
+        let dataResponse, dataError;
+        const userMock = {
+          'id': 12,
+          'name': 'Juanito Maraña',
+          'username': 'juanma',
+          'email': 'juanma@gmail.com'
+        };
+        const mockResponse = new ResponseOptions({body: JSON.stringify(userMock)});
+        mockBackend.connections.subscribe(connection => {
+          expect(connection.request.url).toBe('http://jsonplaceholder.typicode.com/users/12');
+          connection.mockRespond(new Response(mockResponse));
+        });
+
+        // Act
+        const user = {
+          id: 12,
+          'name': 'Juanito Maraña',
+          'username': 'juanma',
+          'email': 'juanma@gmail.com'
+        };
+        usersService.updateUser(user)
+          .subscribe(
+            resp => { // Success
+              dataResponse = resp;
+            }, error => { // Error
+              dataError = error;
+            }
+          );
+        tick();
+
+        // Assert
+        expect(dataError).toBeUndefined();
+        expect(dataResponse.name).toEqual('Juanito Maraña');
+
+      }))
+    );
+
+    it('should return an error when the server is offline',
+      inject([UsersService, MockBackend], fakeAsync((usersService, mockBackend) => {
+
+        // Arrange
+        let dataResponse, dataError;
+        const userMock = {
+          'id': 12,
+          'name': 'Juanito Maraña',
+          'username': 'juanma',
+          'email': 'juanma@gmail.com'
+        };
+        const mockResponse = new ResponseOptions({body: JSON.stringify(userMock)});
+        mockBackend.connections.subscribe(connection => {
+          expect(connection.request.url).toBe('http://jsonplaceholder.typicode.com/users/12');
+          connection.mockError(new Error('error'));
+        });
+
+        // Act
+        const user = {
+          id: 12,
+          'name': 'Juanito Maraña',
+          'username': 'juanma',
+          'email': 'juanma@gmail.com'
+        };
+        usersService.updateUser(user)
+          .subscribe(
+            resp => { // Success
+              dataResponse = resp;
+            }, error => { // Error
+              dataError = error;
+            }
+          );
+        tick();
+
+        // Assert
+        expect(dataError).toBeDefined();
+        expect(dataResponse).toBeUndefined();
+
+      }))
+    );
+
+  });
+
 });
