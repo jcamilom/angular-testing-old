@@ -21,4 +21,12 @@ export class UsersService {
         map(resp => resp.json())
       );
   }
+
+  public createUser(newUser: any) {
+    const data = JSON.stringify(newUser);
+    return this.http.post(`${this.path}`, data)
+    .pipe(
+      map(resp => resp.json())
+    );
+  }
 }
