@@ -29,4 +29,14 @@ export class UsersService {
       map(resp => resp.json())
     );
   }
+
+  public updateUser(user: any) {
+    const id = user.id;
+    const data = JSON.stringify(user);
+    return this.http.put(`${this.path}/${id}`, data)
+      .pipe(
+        map(resp => resp.json())
+      );
+  }
+
 }
