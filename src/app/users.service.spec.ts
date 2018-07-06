@@ -89,30 +89,6 @@ describe('UsersService', () => {
 
         // Arrange
         let dataResponse, dataError;
-        const userMock = {
-          'id': 1,
-          'name': 'Leanne Graham',
-          'username': 'Bret',
-          'email': 'Sincere@april.biz',
-          'address': {
-            'street': 'Kulas Light',
-            'suite': 'Apt. 556',
-            'city': 'Gwenborough',
-            'zipcode': '92998-3874',
-            'geo': {
-              'lat': '-37.3159',
-              'lng': '81.1496'
-            }
-          },
-          'phone': '1-770-736-8031 x56442',
-          'website': 'hildegard.org',
-          'company': {
-            'name': 'Romaguera-Crona',
-            'catchPhrase': 'Multi-layered client-server neural-net',
-            'bs': 'harness real-time e-markets'
-          }
-        };
-        const mockResponse = new ResponseOptions({body: JSON.stringify(userMock)});
         mockBackend.connections.subscribe(connection => {
           expect(connection.request.url).toBe('http://jsonplaceholder.typicode.com/users/1');
           connection.mockError(new Error('error'));
@@ -133,6 +109,84 @@ describe('UsersService', () => {
         expect(dataResponse).toBeUndefined();
         expect(dataError).toBeDefined();
 
+      }))
+    );
+
+  });
+
+  describe('test for createUser', () => {
+
+    it('should return a new user',
+      inject([UsersService, MockBackend], fakeAsync((usersService, mockBackend) => {
+
+        // Arrange
+        let dataResponse, dataError;
+        const userMock = {
+          'id': 1,
+          'name': 'Juanito Alimaña',
+          'username': 'juañi',
+          'email': 'juanñi@gmail.com'
+        };
+        const mockResponse = new ResponseOptions({body: JSON.stringify(userMock)});
+        mockBackend.connections.subscribe(connection => {
+          expect(connection.request.url).toBe('http://jsonplaceholder.typicode.com/users');
+          connection.mockRespond(new Response(mockResponse));
+        });
+
+        // Arrange
+        const newUser = {
+          'name': 'Juanito Alimaña',
+          'username': 'juañi',
+          'email': 'juanñi@gmail.com'
+        };
+        usersService.createUser(newUser)
+          .subscribe(
+            resp => { // Success
+              dataResponse = resp;
+            }, error => { // Error
+              dataError = error;
+            }
+          );
+        tick();
+
+        // Assert
+        expect(dataError).toBeUndefined();
+        expect(dataResponse.id).toBeDefined();
+        expect(dataResponse.name).toEqual('Juanito Alimaña');
+        expect(dataResponse.username).toEqual('juañi');
+        expect(dataResponse.email).toEqual('juañi@gmail.com');
+      }))
+    );
+
+    it('shouldn\'t return a new user when the server is offline',
+      inject([UsersService, MockBackend], fakeAsync((usersService, mockBackend) => {
+
+        // Arrange
+        let dataResponse, dataError;
+        mockBackend.connections.subscribe(connection => {
+          expect(connection.request.url).toBe('http://jsonplaceholder.typicode.com/users');
+          connection.mockError(new Error('error'));
+        });
+
+        // Arrange
+        const newUser = {
+          'name': 'Juanito Alimaña',
+          'username': 'juañi',
+          'email': 'juanñi@gmail.com'
+        };
+        usersService.createUser(newUser)
+          .subscribe(
+            resp => { // Success
+              dataResponse = resp;
+            }, error => { // Error
+              dataError = error;
+            }
+          );
+        tick();
+
+        // Assert
+        expect(dataResponse).toBeUndefined();
+        expect(dataError).toBeDefined();
       }))
     );
 
