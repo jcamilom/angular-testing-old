@@ -125,7 +125,7 @@ describe('UsersService', () => {
           'id': 1,
           'name': 'Juanito Alimaña',
           'username': 'juañi',
-          'email': 'juanñi@gmail.com'
+          'email': 'juañi@gmail.com'
         };
         const mockResponse = new ResponseOptions({body: JSON.stringify(userMock)});
         mockBackend.connections.subscribe(connection => {
@@ -137,7 +137,7 @@ describe('UsersService', () => {
         const newUser = {
           'name': 'Juanito Alimaña',
           'username': 'juañi',
-          'email': 'juanñi@gmail.com'
+          'email': 'juañi@gmail.com'
         };
         usersService.createUser(newUser)
           .subscribe(
@@ -172,7 +172,7 @@ describe('UsersService', () => {
         const newUser = {
           'name': 'Juanito Alimaña',
           'username': 'juañi',
-          'email': 'juanñi@gmail.com'
+          'email': 'juañi@gmail.com'
         };
         usersService.createUser(newUser)
           .subscribe(
