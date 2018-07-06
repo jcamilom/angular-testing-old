@@ -39,4 +39,11 @@ export class UsersService {
       );
   }
 
+  public deleteUser(id: number) {
+    return this.http.delete(`${this.path}/${id}`)
+      .pipe(
+        map(resp => resp.json())
+      );
+  }
+
 }
