@@ -10,7 +10,7 @@ import {
 import { MockBackend } from '@angular/http/testing';
 import { UsersService } from './users.service';
 
-fdescribe('UsersService', () => {
+describe('UsersService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
@@ -65,7 +65,7 @@ fdescribe('UsersService', () => {
         const mockResponse = new ResponseOptions({body: JSON.stringify(userMock)});
         mockBackend.connections.subscribe(connection => {
           expect(connection.request.url).toBe('http://jsonplaceholder.typicode.com/users/1');
-          connection.mockResponse(mockResponse);
+          connection.mockRespond(new Response(mockResponse));
         });
 
         // Act
