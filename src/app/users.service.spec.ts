@@ -5,7 +5,8 @@ import {
   ConnectionBackend,
   BaseRequestOptions,
   Response,
-  ResponseOptions
+  ResponseOptions,
+  RequestMethod
 } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 import { UsersService } from './users.service';
@@ -38,7 +39,7 @@ describe('UsersService', () => {
       inject([UsersService, MockBackend], fakeAsync((usersService, mockBackend: MockBackend) => {
 
         // Arrange
-        let dataResponse;
+        let dataResponse, dataUrl, dataMethod;
         const userMock = {
           'id': 1,
           'name': 'Leanne Graham',
@@ -64,7 +65,8 @@ describe('UsersService', () => {
         };
         const mockResponse = new ResponseOptions({body: JSON.stringify(userMock)});
         mockBackend.connections.subscribe(connection => {
-          expect(connection.request.url).toBe('http://jsonplaceholder.typicode.com/users/1');
+          dataUrl = connection.request.url;
+          dataMethod = connection.request.method;
           connection.mockRespond(new Response(mockResponse));
         });
 
@@ -79,7 +81,8 @@ describe('UsersService', () => {
         expect(dataResponse.id).toBeDefined();
         expect(dataResponse.name).toBeDefined();
         expect(dataResponse.address).toBeDefined();
-
+        expect(dataUrl).toEqual('http://jsonplaceholder.typicode.com/users/1');
+        expect(dataMethod).toBe(RequestMethod.Get);
 
       }))
     );
@@ -88,9 +91,10 @@ describe('UsersService', () => {
       inject([UsersService, MockBackend], fakeAsync((usersService, mockBackend: MockBackend) => {
 
         // Arrange
-        let dataResponse, dataError;
+        let dataResponse, dataUrl, dataMethod, dataError;
         mockBackend.connections.subscribe(connection => {
-          expect(connection.request.url).toBe('http://jsonplaceholder.typicode.com/users/1');
+          dataUrl = connection.request.url;
+          dataMethod = connection.request.method;
           connection.mockError(new Error('error'));
         });
 
@@ -108,6 +112,8 @@ describe('UsersService', () => {
         // Assert
         expect(dataResponse).toBeUndefined();
         expect(dataError).toBeDefined();
+        expect(dataUrl).toBe('http://jsonplaceholder.typicode.com/users/1');
+        expect(dataMethod).toBe(RequestMethod.Get);
 
       }))
     );
@@ -120,7 +126,7 @@ describe('UsersService', () => {
       inject([UsersService, MockBackend], fakeAsync((usersService, mockBackend) => {
 
         // Arrange
-        let dataResponse, dataError;
+        let dataResponse, dataUrl, dataMethod, dataError;
         const userMock = {
           'id': 1,
           'name': 'Juanito Alimaña',
@@ -129,7 +135,8 @@ describe('UsersService', () => {
         };
         const mockResponse = new ResponseOptions({body: JSON.stringify(userMock)});
         mockBackend.connections.subscribe(connection => {
-          expect(connection.request.url).toBe('http://jsonplaceholder.typicode.com/users');
+          dataUrl = connection.request.url;
+          dataMethod = connection.request.method;
           connection.mockRespond(new Response(mockResponse));
         });
 
@@ -155,6 +162,9 @@ describe('UsersService', () => {
         expect(dataResponse.name).toEqual('Juanito Alimaña');
         expect(dataResponse.username).toEqual('juañi');
         expect(dataResponse.email).toEqual('juañi@gmail.com');
+        expect(dataUrl).toBe('http://jsonplaceholder.typicode.com/users');
+        expect(dataMethod).toBe(RequestMethod.Post);
+
       }))
     );
 
@@ -162,9 +172,10 @@ describe('UsersService', () => {
       inject([UsersService, MockBackend], fakeAsync((usersService, mockBackend) => {
 
         // Arrange
-        let dataResponse, dataError;
+        let dataResponse, dataUrl, dataMethod, dataError;
         mockBackend.connections.subscribe(connection => {
-          expect(connection.request.url).toBe('http://jsonplaceholder.typicode.com/users');
+          dataUrl = connection.request.url;
+          dataMethod = connection.request.method;
           connection.mockError(new Error('error'));
         });
 
@@ -187,6 +198,9 @@ describe('UsersService', () => {
         // Assert
         expect(dataResponse).toBeUndefined();
         expect(dataError).toBeDefined();
+        expect(dataUrl).toBe('http://jsonplaceholder.typicode.com/users');
+        expect(dataMethod).toBe(RequestMethod.Post);
+
       }))
     );
 
@@ -198,7 +212,7 @@ describe('UsersService', () => {
       inject([UsersService, MockBackend], fakeAsync((usersService, mockBackend) => {
 
         // Arrange
-        let dataResponse, dataError;
+        let dataResponse, dataUrl, dataMethod, dataError;
         const userMock = {
           'id': 12,
           'name': 'Juanito Maraña',
@@ -207,7 +221,8 @@ describe('UsersService', () => {
         };
         const mockResponse = new ResponseOptions({body: JSON.stringify(userMock)});
         mockBackend.connections.subscribe(connection => {
-          expect(connection.request.url).toBe('http://jsonplaceholder.typicode.com/users/12');
+          dataUrl = connection.request.url;
+          dataMethod = connection.request.method;
           connection.mockRespond(new Response(mockResponse));
         });
 
@@ -231,6 +246,8 @@ describe('UsersService', () => {
         // Assert
         expect(dataError).toBeUndefined();
         expect(dataResponse.name).toEqual('Juanito Maraña');
+        expect(dataUrl).toBe('http://jsonplaceholder.typicode.com/users/12');
+        expect(dataMethod).toBe(RequestMethod.Put);
 
       }))
     );
@@ -239,9 +256,10 @@ describe('UsersService', () => {
       inject([UsersService, MockBackend], fakeAsync((usersService, mockBackend) => {
 
         // Arrange
-        let dataResponse, dataError;
+        let dataResponse, dataUrl, dataMethod, dataError;
         mockBackend.connections.subscribe(connection => {
-          expect(connection.request.url).toBe('http://jsonplaceholder.typicode.com/users/12');
+          dataUrl = connection.request.url;
+          dataMethod = connection.request.method;
           connection.mockError(new Error('error'));
         });
 
@@ -265,6 +283,8 @@ describe('UsersService', () => {
         // Assert
         expect(dataError).toBeDefined();
         expect(dataResponse).toBeUndefined();
+        expect(dataUrl).toBe('http://jsonplaceholder.typicode.com/users/12');
+        expect(dataMethod).toBe(RequestMethod.Put);
 
       }))
     );
@@ -277,10 +297,11 @@ describe('UsersService', () => {
       inject([UsersService, MockBackend], fakeAsync((usersService, mockBackend) => {
 
         // Arrange
-        let dataResponse, dataError;
+        let dataResponse, dataUrl, dataMethod, dataError;
         const mockResponse = new ResponseOptions({body: '{}'});
         mockBackend.connections.subscribe(connection => {
-          expect(connection.request.url).toBe('http://jsonplaceholder.typicode.com/users/68');
+          dataUrl = connection.request.url;
+          dataMethod = connection.request.method;
           connection.mockRespond(new Response(mockResponse));
         });
 
@@ -298,6 +319,8 @@ describe('UsersService', () => {
         // Assert
         expect(dataError).toBeUndefined();
         expect(dataResponse).toEqual({});
+        expect(dataUrl).toBe('http://jsonplaceholder.typicode.com/users/68');
+        expect(dataMethod).toBe(RequestMethod.Delete);
 
       }))
     );
@@ -306,9 +329,10 @@ describe('UsersService', () => {
       inject([UsersService, MockBackend], fakeAsync((usersService, mockBackend) => {
 
         // Arrange
-        let dataResponse, dataError, dataUrl;
+        let dataResponse, dataUrl, dataMethod, dataError;
         mockBackend.connections.subscribe(connection => {
           dataUrl = connection.request.url;
+          dataMethod = connection.request.method;
           connection.mockError(new Error('error'));
         });
 
@@ -327,6 +351,7 @@ describe('UsersService', () => {
         expect(dataError).toBeDefined();
         expect(dataResponse).toBeUndefined();
         expect(dataUrl).toEqual('http://jsonplaceholder.typicode.com/users/68');
+        expect(dataMethod).toBe(RequestMethod.Delete);
 
       }))
     );
