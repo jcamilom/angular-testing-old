@@ -240,13 +240,6 @@ describe('UsersService', () => {
 
         // Arrange
         let dataResponse, dataError;
-        const userMock = {
-          'id': 12,
-          'name': 'Juanito Maraña',
-          'username': 'juanma',
-          'email': 'juanma@gmail.com'
-        };
-        const mockResponse = new ResponseOptions({body: JSON.stringify(userMock)});
         mockBackend.connections.subscribe(connection => {
           expect(connection.request.url).toBe('http://jsonplaceholder.typicode.com/users/12');
           connection.mockError(new Error('error'));
@@ -272,6 +265,68 @@ describe('UsersService', () => {
         // Assert
         expect(dataError).toBeDefined();
         expect(dataResponse).toBeUndefined();
+
+      }))
+    );
+
+  });
+
+  describe('test for deleteUser', () => {
+
+    it('should return an empty object: {}',
+      inject([UsersService, MockBackend], fakeAsync((usersService, mockBackend) => {
+
+        // Arrange
+        let dataResponse, dataError;
+        const mockResponse = new ResponseOptions({body: '{}'});
+        mockBackend.connections.subscribe(connection => {
+          expect(connection.request.url).toBe('http://jsonplaceholder.typicode.com/users/68');
+          connection.mockRespond(new Response(mockResponse));
+        });
+
+        // Act
+        usersService.deleteUser(68)
+          .subscribe(
+            resp => { // Success
+              dataResponse = resp;
+            }, error => { // Error
+              dataError = error;
+            }
+          );
+        tick();
+
+        // Assert
+        expect(dataError).toBeUndefined();
+        expect(dataResponse).toEqual({});
+
+      }))
+    );
+
+    it('should return an error when the server is offline',
+      inject([UsersService, MockBackend], fakeAsync((usersService, mockBackend) => {
+
+        // Arrange
+        let dataResponse, dataError, dataUrl;
+        mockBackend.connections.subscribe(connection => {
+          dataUrl = connection.request.url;
+          connection.mockError(new Error('error'));
+        });
+
+        // Act
+        usersService.deleteUser(68)
+          .subscribe(
+            resp => { // Success
+              dataResponse = resp;
+            }, error => { // Error
+              dataError = error;
+            }
+          );
+        tick();
+
+        // Assert
+        expect(dataError).toBeDefined();
+        expect(dataResponse).toBeUndefined();
+        expect(dataUrl).toEqual('http://jsonplaceholder.typicode.com/users/68');
 
       }))
     );
