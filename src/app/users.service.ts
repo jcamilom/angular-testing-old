@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -16,7 +16,7 @@ export class UsersService {
 
   // TODO: update Http to HttpClient and use rxjs v6
   public getUser(id: number): Observable<any> {
-    return this.http.get(`${this.path}/${id}`)
+    return this.http.get(`${this.path}/${id}`, this.makeOptions())
       .pipe(
         map(resp => resp.json())
       );
@@ -44,6 +44,13 @@ export class UsersService {
       .pipe(
         map(resp => resp.json())
       );
+  }
+
+  private makeOptions() {
+    // tslint:disable-next-line:prefer-const
+    let headers = new Headers();
+    headers.append('API-TOKEN', 'xxyyzz');
+    return {headers: headers};
   }
 
 }
