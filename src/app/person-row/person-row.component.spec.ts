@@ -3,7 +3,7 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { PersonRowComponent } from './person-row.component';
-import { componentRefresh } from '../../../node_modules/@angular/core/src/render3/instructions';
+import { Person } from './../person';
 
 describe('Test for PersonRowComponent', () => {
   let component: PersonRowComponent;
@@ -20,6 +20,15 @@ describe('Test for PersonRowComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(PersonRowComponent);
     component = fixture.componentInstance;
+
+    component.person = new Person(
+      'Carolina',
+      'Velez',
+      23,
+      65,
+      1.75,
+    );
+
     fixture.detectChanges();
   });
 
@@ -28,11 +37,11 @@ describe('Test for PersonRowComponent', () => {
   });
 
   it('should have \'Carolina\' as name', () => {
-    expect(component.name).toEqual('Carolina');
+    expect(component.person.name).toEqual('Carolina');
   });
 
   it('should have 23 as the age', () => {
-    expect(component.age).toEqual(23);
+    expect(component.person.age).toEqual(23);
   });
 
   it('should have name \'Carolina\' in the template', () => {
@@ -46,7 +55,7 @@ describe('Test for PersonRowComponent', () => {
     const de = fixture.debugElement.query(By.css('h1'));
     const el = de.nativeElement;
 
-    component.name = 'Federico';
+    component.person.name = 'Federico';
 
     fixture.detectChanges();
     expect(el.textContent).toEqual('Federico');
@@ -63,7 +72,7 @@ describe('Test for PersonRowComponent', () => {
     const de = fixture.debugElement.query(By.css('h2'));
     const el = de.nativeElement;
 
-    component.age = 32;
+    component.person.age = 32;
 
     fixture.detectChanges();
     expect(el.textContent).toEqual('Your age: 32');
