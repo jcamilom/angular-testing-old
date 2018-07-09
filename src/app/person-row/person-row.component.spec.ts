@@ -32,4 +32,21 @@ describe('Test for PersonRowComponent', () => {
     expect(component.age).toEqual(23);
   });
 
+  it('should have name \'Carolina\' in the template', () => {
+    const de = fixture.debugElement.query(By.css('h1'));
+    const el = de.nativeElement;
+    fixture.detectChanges();
+    expect(el.textContent).toEqual('Carolina');
+  });
+
+  it('should have name \'Federico\' in the template when value is updated', () => {
+    const de = fixture.debugElement.query(By.css('h1'));
+    const el = de.nativeElement;
+
+    component.name = 'Federico';
+
+    fixture.detectChanges();
+    expect(el.textContent).toEqual('Federico');
+  });
+
 });
