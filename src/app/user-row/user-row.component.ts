@@ -9,10 +9,15 @@ import { User } from './../user';
 export class UserRowComponent implements OnInit {
 
   @Input() user: User;
+  email: string;
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  public displayEmail() {
+    this.email = this.user.email;
   }
 
 }

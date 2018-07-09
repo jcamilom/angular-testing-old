@@ -53,4 +53,18 @@ describe('Test for UserRowComponent', () => {
     expect(el.textContent).toEqual('Ricardo');
   });
 
+  it('should display the email when button clicked', () => {
+    // Arrange
+    const button = fixture.debugElement.query(By.css('.btn-display-email'));
+    const de = fixture.debugElement.query(By.css('.user-email'));
+    const el = de.nativeElement;
+    button.triggerEventHandler('click', null);
+
+    // Act
+    fixture.detectChanges();
+
+    // Assert
+    expect(el.textContent).toEqual('sabina@mail.net');
+  });
+
 });
