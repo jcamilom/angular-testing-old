@@ -4,10 +4,12 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { UsersService } from './users.service';
+import { PersonRowComponent } from './person-row/person-row.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PersonRowComponent
   ],
   imports: [
     BrowserModule,
