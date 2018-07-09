@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Calculator } from './calculator';
 
 import { Person } from './person';
 
