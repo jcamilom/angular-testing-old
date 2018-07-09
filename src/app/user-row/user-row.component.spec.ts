@@ -58,13 +58,29 @@ describe('Test for UserRowComponent', () => {
     const button = fixture.debugElement.query(By.css('.btn-display-email'));
     const de = fixture.debugElement.query(By.css('.user-email'));
     const el = de.nativeElement;
-    button.triggerEventHandler('click', null);
 
     // Act
+    button.triggerEventHandler('click', null);
     fixture.detectChanges();
 
     // Assert
     expect(el.textContent).toEqual('sabina@mail.net');
+  });
+
+  it('should emit selectedUser when select button is clicked', () => {
+    // Arrange
+    let selectedUser: User;
+    component.x_onSelected.subscribe((user: User) => {
+      selectedUser = user;
+    });
+    const button = fixture.debugElement.query(By.css('.btn-selected'));
+
+    // Act
+    button.triggerEventHandler('click', null);
+    fixture.detectChanges();
+
+    // Assert
+    expect(selectedUser.name).toEqual('Sabina');
   });
 
 });
