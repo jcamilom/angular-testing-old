@@ -1,7 +1,7 @@
 import { Person } from './person';
 
 describe('Test for person', () => {
-    
+
     let person;
 
     // Arrange

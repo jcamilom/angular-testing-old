@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PersonRowComponent implements OnInit {
 
+  name: string = 'Carolina';
+  age: number = 23;
+
   constructor() { }
 
   ngOnInit() {
