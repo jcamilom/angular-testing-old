@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
@@ -10,14 +10,17 @@ describe('Test for PersonRowComponent', () => {
   let fixture: ComponentFixture<PersonRowComponent>;
 
   // Arrange
-  beforeEach(() => {
+  beforeEach(async() => {
     TestBed.configureTestingModule({
       declarations: [ PersonRowComponent ],
-    });
+    })
+    .compileComponents();
+  });
 
+  beforeEach(() => {
     fixture = TestBed.createComponent(PersonRowComponent);
     component = fixture.componentInstance;
-
+    fixture.detectChanges();
   });
 
   it('should create', () => {
@@ -47,6 +50,23 @@ describe('Test for PersonRowComponent', () => {
 
     fixture.detectChanges();
     expect(el.textContent).toEqual('Federico');
+  });
+
+  it('should have \'Your age: 23\' in the template', () => {
+    const de = fixture.debugElement.query(By.css('h2'));
+    const el = de.nativeElement;
+    fixture.detectChanges();
+    expect(el.textContent).toEqual('Your age: 23');
+  });
+
+  it('should have \'Your age: 32\' in the template when value is updated', () => {
+    const de = fixture.debugElement.query(By.css('h2'));
+    const el = de.nativeElement;
+
+    component.age = 32;
+
+    fixture.detectChanges();
+    expect(el.textContent).toEqual('Your age: 32');
   });
 
 });
