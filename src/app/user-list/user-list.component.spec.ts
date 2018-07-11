@@ -5,7 +5,7 @@ import { DebugElement } from '@angular/core';
 import { UserListComponent } from './user-list.component';
 import { UserRowComponent } from './../user-row/user-row.component';
 
-describe('UserListComponent', () => {
+describe('Test for UserListComponent', () => {
   let component: UserListComponent;
   let fixture: ComponentFixture<UserListComponent>;
 

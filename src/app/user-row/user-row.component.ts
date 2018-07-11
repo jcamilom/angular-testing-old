@@ -9,7 +9,7 @@ import { User } from './../user';
 export class UserRowComponent implements OnInit {
 
   @Input() user: User;
-  @Output() x_onSelected = new EventEmitter<User>();
+  @Output() xonSelected = new EventEmitter<User>();
   email: string;
 
   constructor() { }
@@ -22,7 +22,7 @@ export class UserRowComponent implements OnInit {
   }
 
   public selectUser() {
-    this.x_onSelected.emit(this.user);
+    this.xonSelected.emit(this.user);
   }
 
 }

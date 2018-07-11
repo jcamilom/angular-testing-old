@@ -70,7 +70,7 @@ describe('Test for UserRowComponent', () => {
   it('should emit selectedUser when select button is clicked', () => {
     // Arrange
     let selectedUser: User;
-    component.x_onSelected.subscribe((user: User) => {
+    component.xonSelected.subscribe((user: User) => {
       selectedUser = user;
     });
     const button = fixture.debugElement.query(By.css('.btn-selected'));
