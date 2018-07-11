@@ -34,4 +34,20 @@ describe('Test for UserListComponent', () => {
     expect(de).toBeTruthy();
   });
 
+  it('should assign second element of \'users\' to \'selectedUser\'', () => {
+    expect(component.selectedUser.name).toEqual('Antonia');
+  });
+
+  it('should received emited selectedUser when select button is clicked in app-user-row component', () => {
+    // Arrange
+    const button = fixture.debugElement.query(By.css('app-user-row .btn-selected'));
+
+    // Act
+    button.triggerEventHandler('click', null);
+    fixture.detectChanges();
+
+    // Assert
+    expect(component.selectedUser.name).toEqual('Federico');
+  });
+
 });

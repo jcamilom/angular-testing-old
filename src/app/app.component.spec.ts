@@ -2,13 +2,15 @@ import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 
 import { PersonRowComponent } from './person-row/person-row.component';
+import { UserListComponent } from './user-list/user-list.component';
 
-describe('AppComponent', () => {
+/* describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
         AppComponent,
-        PersonRowComponent
+        PersonRowComponent, // could be deleted???
+        UserListComponent
       ],
     }).compileComponents();
   }));
@@ -28,4 +30,4 @@ describe('AppComponent', () => {
     const compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('h1').textContent).toContain('Welcome to ing-test!');
   }));
-});
+}); */
