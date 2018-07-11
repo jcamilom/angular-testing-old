@@ -452,7 +452,6 @@ describe('UsersService', () => {
           dataResponse = resp;
         });
         tick();
-        console.log(dataResponse);
 
         // Assert
         expect(dataResponse.length).toEqual(3);

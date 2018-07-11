@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { UsersService } from './../users.service';
+
 import { User } from './../user';
 
 @Component({
@@ -10,16 +12,18 @@ import { User } from './../user';
 export class UserListComponent implements OnInit {
 
   users: User[] = [];
-  selectedUser: User;
+  selectedUser: User | any = {};
 
-  constructor() {
-    this.users.push(new User('Federico', 'fede@mail.net', '321'));
-    this.users.push(new User('Antonia', 'antonia@mail.net', '123'));
-    this.users.push(new User('Pedro', 'pedrito@mail.net', '3345'));
-   }
+  constructor(
+    private usersService: UsersService
+  ) { }
 
   ngOnInit() {
-    this.selectedUser = this.users[1];
+    this.usersService.getAllUsers()
+      .subscribe(data => {
+        this.users = data;
+        this.selectedUser = this.users[1];
+      });
   }
 
   public select(user: User) {
