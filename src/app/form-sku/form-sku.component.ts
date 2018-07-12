@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validator, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-form-sku',
@@ -20,7 +20,7 @@ export class FormSkuComponent implements OnInit {
   }
 
   private makeSkuForm() {
-    this.skuField = new FormControl();
+    this.skuField = new FormControl('', [Validators.required]);
     this.skuNameField = new FormControl();
 
     this.skuForm = new FormGroup({

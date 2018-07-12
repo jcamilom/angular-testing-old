@@ -39,4 +39,18 @@ describe('FormSkuComponent', () => {
   it('should create skuForm', () => {
     expect(component.skuNameField).toBeTruthy();
   });
+
+  describe('Test for skuField', () => {
+
+    it('shouldn\'t throw an error: required', () => {
+      component.skuField.setValue('abc321');
+      expect(component.skuField.valid).toBeTruthy();
+    });
+
+    it('should throw an error: required', () => {
+      component.skuField.setValue('');
+      expect(component.skuField.invalid).toBeTruthy();
+    });
+
+  });
 });
