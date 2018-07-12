@@ -30,4 +30,12 @@ export class UserListComponent implements OnInit {
     this.selectedUser = user;
   }
 
+  public getUser(idUser: number) {
+    this.usersService.getUser(idUser)
+      .subscribe(user => {
+        this.users[0] = user;
+        this.selectedUser = user;
+      });
+  }
+
 }

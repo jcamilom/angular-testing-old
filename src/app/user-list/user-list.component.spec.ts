@@ -44,18 +44,48 @@ describe('Test for UserListComponent with spies', () => {
     });
 
     it('should call getAllUsers', () => {
-        // Arrange
-        const mockUsers = of([
-            new User('Federica', 'federica@mail.net', '321'),
-            new User('Antonia', 'toni@mail.net', '123'),
-        ]);
-        spyOn(usersService, 'getAllUsers').and.returnValue(mockUsers);
-        // Act
+      // Arrange
+      const mockUsers = of([
+          new User('Federica', 'federica@mail.net', '321'),
+          new User('Antonia', 'toni@mail.net', '123'),
+      ]);
+      spyOn(usersService, 'getAllUsers').and.returnValue(mockUsers);
+      // Act
+      fixture.detectChanges();
+      // Assert
+      expect(usersService.getAllUsers).toHaveBeenCalled();
+      expect(usersService.getAllUsers).toHaveBeenCalledTimes(1);
+      expect(component.users.length).toEqual(2);
+    });
+
+    describe('Test for getUser', () => {
+
+      it('should have users[0] as user', () => {
         fixture.detectChanges();
+        // Arrange
+        const mockUser = of(
+          new User('Matilda', 'mati@mail.net', '123'),
+        );
+        spyOn(usersService, 'getUser').and.returnValue(mockUser);
+        // Act
+        component.getUser(122);
         // Assert
-        expect(usersService.getAllUsers).toHaveBeenCalled();
-        expect(usersService.getAllUsers).toHaveBeenCalledTimes(1);
-        expect(component.users.length).toEqual(2);
+        expect(component.users[0].name).toEqual('Matilda');
+      });
+
+      it('should call getUser with 1 parameter', () => {
+        fixture.detectChanges();
+        // Arrange
+        const mockUser = of(
+          new User('Samantha', 'sami@mail.net', '123'),
+        );
+        spyOn(usersService, 'getUser').and.returnValue(mockUser);
+        // Act
+        component.getUser(133);
+        // Assert
+        expect(usersService.getUser).toHaveBeenCalled();
+        expect(usersService.getUser).toHaveBeenCalledWith(133);
+      });
     });
 
 });
