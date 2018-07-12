@@ -42,14 +42,21 @@ describe('FormSkuComponent', () => {
 
   describe('Test for skuField', () => {
 
-    it('shouldn\'t throw an error: required', () => {
-      component.skuField.setValue('abc321');
+    it('shouldn\'t throw an error: required / invalidSku', () => {
+      component.skuField.setValue('123444321');
       expect(component.skuField.valid).toBeTruthy();
     });
 
     it('should throw an error: required', () => {
       component.skuField.setValue('');
       expect(component.skuField.invalid).toBeTruthy();
+      expect(component.skuField.getError('required')).toBeTruthy();
+    });
+
+    it('should throw an error: invalidSku', () => {
+      component.skuField.setValue('g11f');
+      expect(component.skuField.invalid).toBeTruthy();
+      expect(component.skuField.getError('invalidSku')).toBeTruthy();
     });
 
   });

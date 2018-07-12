@@ -1,7 +1,7 @@
 import { MyValidators } from './validators';
 import { FormControl } from '@angular/forms';
 
-fdescribe('Test for validators', () => {
+describe('Test for validators', () => {
 
   describe('Test for skuValidate', () => {
 
