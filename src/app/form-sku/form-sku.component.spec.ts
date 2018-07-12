@@ -1,5 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { By } from '@angular/platform-browser';
+import { DebugElement } from '@angular/core';
 
 import { FormSkuComponent } from './form-sku.component';
 
@@ -58,6 +60,38 @@ describe('FormSkuComponent', () => {
       expect(component.skuField.invalid).toBeTruthy();
       expect(component.skuField.getError('invalidSku')).toBeTruthy();
     });
+
+    it('should show an error in the template: invalidSku', async(() => {
+      // Arrange
+      const input = fixture.debugElement.query(By.css('input#skuInput')).nativeElement;
+      // Act
+      input.value = '987654';
+      input.dispatchEvent(new Event('input'));
+      fixture.detectChanges();
+      fixture.whenStable()
+        .then(() => {
+          // Assert
+          const msgs = fixture.nativeElement.querySelectorAll('.ui.message');
+          expect(msgs.length).toEqual(1);
+          expect(msgs[0].innerHTML).toContain('SKU is invalid');
+        });
+    }));
+
+    it('should show an error in the template: required', async(() => {
+      // Arrange
+      const input = fixture.debugElement.query(By.css('input#skuInput')).nativeElement;
+      // Act
+      input.value = '';
+      input.dispatchEvent(new Event('input'));
+      fixture.detectChanges();
+      fixture.whenStable()
+        .then(() => {
+          // Assert
+          const msgs = fixture.nativeElement.querySelectorAll('.ui.message');
+          expect(msgs.length).toEqual(1);
+          expect(msgs[0].innerHTML).toContain('SKU is required');
+        });
+    }));
 
   });
 });
